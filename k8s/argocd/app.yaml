@@ -1,0 +1,22 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: momo-store
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    namespace: default
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: k8s/helm
+    repoURL: 'git@gitlab.praktikum-services.ru:std-021-009/ed-momo-infra.git'
+    targetRevision: HEAD
+    helm:
+      valueFiles:
+      - values.yaml
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
